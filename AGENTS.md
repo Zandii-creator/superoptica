@@ -1,0 +1,4 @@
+## Reglas Críticas de Entorno (cPanel y Base de Datos)
+- **Base de datos exclusiva:** Solo está permitido interactuar y modificar la base de datos `espejuelos`. Está estrictamente prohibido tocar, migrar o consultar de forma destructiva cualquier otra base de datos del servidor.
+- **Cero automatización en cPanel:** No ejecutes acciones directas ni scripts de despliegue sobre cPanel (no hay CI/CD). Cualquier acción requerida en cPanel fuera de la base de datos `espejuelos` debe proponerse en texto para que el usuario la ejecute manualmente.
+- **Flujo de desarrollo:** Para cambios estructurales o nuevas funcionalidades, sigue el flujo y las reglas definidas en `openspec/config.yaml`.

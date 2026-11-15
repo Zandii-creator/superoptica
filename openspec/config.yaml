@@ -5,24 +5,27 @@ context: |
   All artifacts must be written in spanish.
   Keep OpenSpec structural headings and SHALL/MUST keywords in English.
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always state what is out of scope
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  ## Restricciones de entorno y arquitectura (cPanel y Base de Datos)
+  - Base de datos permitida: unicamente se permite la modificacion de la base de datos
+    "espejuelos". Queda estrictamente prohibido alterar, consultar de manera destructiva o
+    migrar cualquier otra base de datos presente en el cPanel.
+  - Restriccion de operaciones en cPanel: salvo operaciones directas sobre la base de datos
+    "espejuelos", el agente tiene prohibido ejecutar acciones automatizadas en cPanel.
+    Cualquier otra configuracion, gestion de archivos, dominios o servicios en cPanel debe ser
+    propuesta o explicada por el agente, pero ejecutada exclusivamente de forma manual por el
+    usuario.
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+rules:
+  tasks:
+    - "Enfoque de pruebas (TDD): cada tarea de desarrollo debe estructurarse de modo que primero se genere o adapte la prueba unitaria o funcional antes de implementar el codigo de solucion."
+
+# OpenSpec 2.0 solo admite las operaciones `apply` y `archive`.
+# La pauta de verificacion solicitada para `verify` se registra en `archive`,
+# que es el punto de cierre de la implementacion.
+operations:
+  apply:
+    guidance:
+      - "Al aplicar los cambios de una tarea, ejecuta localmente las pruebas correspondientes para verificar que el codigo funciona segun lo esperado."
+  archive:
+    guidance:
+      - "Revisa que la suite de pruebas pase al 100% y documenta los resultados de la verificacion antes de dar por concluida la implementacion."
