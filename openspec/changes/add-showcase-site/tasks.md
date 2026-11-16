@@ -17,11 +17,11 @@
 
 ## 3. Ajustes del sitio
 
-- [ ] 3.1 Escribir primero las pruebas de valores por defecto y guardado de ajustes (deben fallar), luego implementar la tabla y el modelo de fila única tipada; verificar las pruebas en verde.
-- [ ] 3.2 Escribir primero las pruebas de validación de teléfonos, enlaces y campos obligatorios (deben fallar), luego construir la página de ajustes en Filament; verificar que un número inválido no se guarda y las pruebas pasan.
-- [ ] 3.3 Escribir primero la prueba de caché e invalidación de ajustes (debe fallar), luego implementar el caché; verificar que el cambio se refleja en la siguiente lectura y la prueba pasa.
-- [ ] 3.4 Escribir primero las pruebas unitarias del formato de precio y del enlace de WhatsApp (deben fallar), luego implementar los helpers; verificar `1500 → 1,500 CUP` y la codificación del mensaje con las pruebas en verde.
-- [ ] 3.5 Escribir primero las pruebas de aviso de precios, aviso de privacidad y enlaces opcionales (deben fallar), luego implementarlos; verificar que una red social sin configurar no genera enlace y las pruebas pasan.
+- [x] 3.1 Escribir primero las pruebas de valores por defecto y guardado de ajustes (deben fallar), luego implementar la tabla y el modelo de fila única tipada; verificar las pruebas en verde.
+- [x] 3.2 Escribir primero las pruebas de validación de teléfonos, enlaces y campos obligatorios (deben fallar), luego construir la página de ajustes en Filament; verificar que un número inválido no se guarda y las pruebas pasan.
+- [x] 3.3 Escribir primero la prueba de caché e invalidación de ajustes (debe fallar), luego implementar el caché; verificar que el cambio se refleja en la siguiente lectura y la prueba pasa.
+- [x] 3.4 Escribir primero las pruebas unitarias del formato de precio y del enlace de WhatsApp (deben fallar), luego implementar los helpers; verificar `1500 → 1,500 CUP` y la codificación del mensaje con las pruebas en verde.
+- [x] 3.5 Escribir primero las pruebas de aviso de precios, aviso de privacidad y enlaces opcionales (deben fallar), luego implementarlos; verificar que una red social sin configurar no genera enlace y las pruebas pasan.
 
 ## 4. Catálogo público
 
