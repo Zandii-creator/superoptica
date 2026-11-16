@@ -62,4 +62,20 @@ class SiteNoticesTest extends TestCase
         $this->assertSame('https://t.me/superoptica2020', SiteSettings::current()->telegramUrl());
         $this->assertSame('tel:+5333123456', SiteSettings::current()->phoneUrl());
     }
+
+    public function test_the_full_address_does_not_repeat_the_city_when_it_matches_the_province(): void
+    {
+        SiteSettings::current()->update([
+            'address_street' => 'Calle Independencia 45',
+            'address_between' => 'Maceo y Frexes',
+            'city' => 'Ciego de Ávila',
+            'province' => 'Ciego de Ávila',
+            'country' => 'Cuba',
+        ]);
+
+        $this->assertSame(
+            'Calle Independencia 45, entre Maceo y Frexes, Ciego de Ávila, Cuba',
+            SiteSettings::current()->fullAddress()
+        );
+    }
 }

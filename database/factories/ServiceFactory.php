@@ -13,9 +13,9 @@ class ServiceFactory extends Factory
 {
     public function definition(): array
     {
-        $name = fake()->unique()->randomElement([
+        $name = fake()->randomElement([
             'Examen visual', 'Ajuste de espejuelos', 'Graduación', 'Limpieza de lentes',
-        ]).' '.fake()->unique()->numerify('##');
+        ]).' '.fake()->unique()->numberBetween(1, 999999);
 
         return [
             'name' => $name,

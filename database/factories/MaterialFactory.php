@@ -13,9 +13,9 @@ class MaterialFactory extends Factory
 {
     public function definition(): array
     {
-        $name = fake()->unique()->randomElement([
+        $name = fake()->randomElement([
             'Acetato', 'Metal', 'Titanio', 'TR90', 'Acero inoxidable',
-        ]).' '.fake()->unique()->numerify('##');
+        ]).' '.fake()->unique()->numberBetween(1, 999999);
 
         return [
             'name' => $name,

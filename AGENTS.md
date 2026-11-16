@@ -26,7 +26,7 @@ $composer = "$env:LOCALAPPDATA\composer\composer.phar"
 | Tarea | Comando |
 |---|---|
 | Dependencias PHP | `& $php $composer install` |
-| Servidor de desarrollo | `& $php -S 127.0.0.1:8000 -t public` (`artisan serve` falla en este equipo) |
+| Servidor de desarrollo | `& $php -S 127.0.0.1:8000 -t public server.php` (`artisan serve` falla en este equipo) |
 | Compilar assets | `npm run build` |
 | Desarrollo de assets | `npm run dev` |
 | Pruebas | `& $php artisan test` |

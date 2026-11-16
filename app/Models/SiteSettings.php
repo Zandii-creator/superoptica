@@ -106,7 +106,7 @@ class SiteSettings extends Model
             $this->country,
         ]);
 
-        return implode(', ', $parts);
+        return implode(', ', array_unique($parts));
     }
 
     public function heroTitle(): string

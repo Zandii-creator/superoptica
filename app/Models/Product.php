@@ -91,6 +91,55 @@ class Product extends Model implements HasMedia
         return $query->published()->where('is_featured', true);
     }
 
+    /**
+     * Precio referencial: el mas bajo de las variantes con precio; si no,
+     * el precio del producto.
+     */
+    public function referencePrice(): int
+    {
+        $variants = $this->relationLoaded('variants')
+            ? $this->variants
+            : $this->variants()->get();
+
+        $lowest = $variants->whereNotNull('price')->min('price');
+
+        return (int) ($lowest ?? $this->price_from);
+    }
+
+    /**
+     * Nombre comercial para titulos y textos alternativos.
+     */
+    public function displayName(): string
+    {
+        return trim(($this->brand?->name ?? '').' '.$this->model);
+    }
+
+    /**
+     * Medidas en formato lente-puente-varilla; null si falta alguna.
+     */
+    public function measurementsLabel(): ?string
+    {
+        if ($this->lens_width === null || $this->bridge_width === null || $this->temple_length === null) {
+            return null;
+        }
+
+        return $this->lens_width.'-'.$this->bridge_width.'-'.$this->temple_length;
+    }
+
+    public function coverUrl(): ?string
+    {
+        $url = $this->getFirstMediaUrl('images');
+
+        return $url !== '' ? $url : null;
+    }
+
+    public function isPubliclyVisible(): bool
+    {
+        return $this->is_active
+            && $this->published_at !== null
+            && $this->published_at->isPast();
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('images');

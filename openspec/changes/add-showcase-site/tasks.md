@@ -25,11 +25,11 @@
 
 ## 4. Catálogo público
 
-- [ ] 4.1 Escribir primero las pruebas de filtros combinados y de la URL resultante (deben fallar), luego implementar la ruta del catálogo con filtros por marca, tipo, género, material y forma, más paginación en el servidor; verificar las pruebas en verde.
-- [ ] 4.2 Escribir primero las pruebas de estados vacíos y de catálogo sin productos publicados (deben fallar), luego crear las vistas de cuadrícula y tarjeta; verificar las pruebas y la revisión visual.
-- [ ] 4.3 Escribir primero la prueba de búsqueda por URL sin JavaScript (debe fallar), luego implementar la búsqueda por marca y modelo con degradación sin JavaScript; verificar que devuelve los mismos resultados con y sin Livewire.
-- [ ] 4.4 Escribir primero las pruebas de metadatos, `canonical`, `sitemap.xml` y datos estructurados (deben fallar), luego implementarlos; verificar las pruebas y un rastreo manual.
-- [ ] 4.5 Documentar las rutas y parámetros del catálogo en el README; verificar que los ejemplos documentados responden.
+- [x] 4.1 Escribir primero las pruebas de filtros combinados y de la URL resultante (deben fallar), luego implementar la ruta del catálogo con filtros por marca, tipo, género, material y forma, más paginación en el servidor; verificar las pruebas en verde.
+- [x] 4.2 Escribir primero las pruebas de estados vacíos y de catálogo sin productos publicados (deben fallar), luego crear las vistas de cuadrícula y tarjeta; verificar las pruebas y la revisión visual.
+- [x] 4.3 Escribir primero la prueba de búsqueda por URL sin JavaScript (debe fallar), luego implementar la búsqueda por marca y modelo con degradación sin JavaScript; verificar que devuelve los mismos resultados con y sin Livewire.
+- [x] 4.4 Escribir primero las pruebas de metadatos, `canonical`, `sitemap.xml` y datos estructurados (deben fallar), luego implementarlos; verificar las pruebas y un rastreo manual.
+- [x] 4.5 Documentar las rutas y parámetros del catálogo en el README; verificar que los ejemplos documentados responden.
 
 ## 5. Ficha de producto
 

@@ -13,9 +13,9 @@ class ShapeFactory extends Factory
 {
     public function definition(): array
     {
-        $name = fake()->unique()->randomElement([
+        $name = fake()->randomElement([
             'Rectangular', 'Redonda', 'Cuadrada', 'Aviador', 'Gato',
-        ]).' '.fake()->unique()->numerify('##');
+        ]).' '.fake()->unique()->numberBetween(1, 999999);
 
         return [
             'name' => $name,
