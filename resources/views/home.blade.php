@@ -80,10 +80,21 @@
     @if ($services->isNotEmpty())
         <section id="servicios" class="border-y border-slate-200 bg-slate-50">
             <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-                <h2 class="font-display text-2xl font-bold text-navy sm:text-3xl">Servicios</h2>
-                <p class="mt-2 max-w-2xl text-slate-600">
-                    Te acompañamos antes, durante y después de elegir tus espejuelos.
-                </p>
+                <div class="flex flex-wrap items-end justify-between gap-4">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold text-navy sm:text-3xl">Servicios</h2>
+                        <p class="mt-2 max-w-2xl text-slate-600">
+                            Te acompañamos antes, durante y después de elegir tus espejuelos.
+                        </p>
+                    </div>
+
+                    <a
+                        href="{{ route('services.index') }}"
+                        class="text-sm font-semibold text-brand underline-offset-4 hover:underline"
+                    >
+                        Ver todos los servicios
+                    </a>
+                </div>
 
                 <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($services as $service)

@@ -40,8 +40,8 @@
 
 ## 6. Servicios
 
-- [ ] 6.1 Escribir primero las pruebas de servicios activos y de su orden (deben fallar), luego crear la página de servicios; verificar que los inactivos no aparecen y las pruebas pasan.
-- [ ] 6.2 Escribir primero las pruebas del CTA por servicio y de ausencia de precios (deben fallar), luego implementarlas; verificar que el mensaje menciona el servicio, no aparece ningún importe y las pruebas pasan.
+- [x] 6.1 Escribir primero las pruebas de servicios activos y de su orden (deben fallar), luego crear la página de servicios; verificar que los inactivos no aparecen y las pruebas pasan.
+- [x] 6.2 Escribir primero las pruebas del CTA por servicio y de ausencia de precios (deben fallar), luego implementarlas; verificar que el mensaje menciona el servicio, no aparece ningún importe y las pruebas pasan.
 
 ## 7. Tienda y contacto
 

@@ -5,6 +5,9 @@
     <url>
         <loc>{{ route('catalog.index') }}</loc>
     </url>
+    <url>
+        <loc>{{ route('services.index') }}</loc>
+    </url>
     @foreach ($products as $product)
         <url>
             <loc>{{ route('products.show', $product) }}</loc>

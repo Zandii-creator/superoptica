@@ -32,6 +32,7 @@ npm run build
 | `GET /` | Página de inicio: portada, modelos destacados, servicios y tienda. |
 | `GET /catalogo` | Catálogo paginado de productos publicados y activos. |
 | `GET /catalogo/{slug}` | Ficha del producto. Devuelve 404 si está en borrador o inactivo. |
+| `GET /servicios` | Servicios activos con su descripción y contacto por WhatsApp. |
 | `GET /sitemap.xml` | Mapa del sitio para buscadores. |
 
 ### Parámetros del catálogo

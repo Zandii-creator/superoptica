@@ -89,7 +89,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home') }}#servicios" class="rounded-md py-1 text-navy transition hover:text-brand">
+                        <a
+                            href="{{ route('services.index') }}"
+                            @class([
+                                'rounded-md py-1 transition hover:text-brand',
+                                'text-brand' => request()->routeIs('services.*'),
+                                'text-navy' => ! request()->routeIs('services.*'),
+                            ])
+                        >
                             Servicios
                         </a>
                     </li>
