@@ -86,7 +86,7 @@
                     @foreach ($settings->weeklyHours() as $day)
                         <div class="flex items-center justify-between gap-4 py-2.5 text-sm">
                             <dt class="text-slate-600">{{ $day['day'] }}</dt>
-                            <dd class="{{ $day['hours'] ? 'font-medium text-navy' : 'text-slate-400' }}">
+                            <dd class="{{ $day['hours'] ? 'font-medium text-navy' : 'text-slate-500' }}">
                                 {{ $day['hours'] ?? 'Cerrado' }}
                             </dd>
                         </div>

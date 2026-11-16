@@ -44,7 +44,7 @@
                     <div class="grid h-40 w-40 place-items-center rounded-[1.75rem] border-4 border-brand font-display text-4xl font-bold tracking-tight text-navy sm:h-48 sm:w-48 sm:text-5xl">
                         20 20
                     </div>
-                    <p class="absolute bottom-6 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+                    <p class="absolute bottom-6 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
                         Visión de futuro
                     </p>
                 </div>
@@ -150,7 +150,7 @@
                     @foreach ($settings->weeklyHours() as $day)
                         <div class="flex justify-between gap-4 border-b border-slate-100 pb-1.5">
                             <dt class="text-slate-600">{{ $day['day'] }}</dt>
-                            <dd class="{{ $day['hours'] ? 'font-medium text-navy' : 'text-slate-400' }}">
+                            <dd class="{{ $day['hours'] ? 'font-medium text-navy' : 'text-slate-500' }}">
                                 {{ $day['hours'] ?? 'Cerrado' }}
                             </dd>
                         </div>

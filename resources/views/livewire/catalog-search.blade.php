@@ -20,7 +20,7 @@
                 wire:model.live.debounce.500ms="q"
                 placeholder="Marca o modelo. Ejemplo: 82278"
                 autocomplete="off"
-                class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+                class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-500 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
             >
 
             <button

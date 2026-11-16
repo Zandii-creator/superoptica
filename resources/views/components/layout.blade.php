@@ -11,6 +11,10 @@
     $pageTitle = filled($title) ? $title.' | '.$siteName : $siteName;
     $metaDescription = $description ?: $settings->seo_description ?: 'Espejuelos, monturas, lentes de contacto y líquidos en Ciego de Ávila.';
     $canonicalUrl = $canonical ?: url()->current();
+    $faviconUrl = $settings->favicon
+        ? \Illuminate\Support\Facades\Storage::disk('public')->url($settings->favicon)
+        : '/favicon.svg';
+    $faviconType = str_ends_with($faviconUrl, '.svg') ? 'image/svg+xml' : 'image/png';
 @endphp
 
 <!DOCTYPE html>
@@ -22,6 +26,7 @@
 
     <title>{{ $pageTitle }}</title>
     <meta name="description" content="{{ $metaDescription }}">
+    <link rel="icon" href="{{ $faviconUrl }}" type="{{ $faviconType }}">
     <link rel="canonical" href="{{ $canonicalUrl }}">
 
     <meta property="og:type" content="website">
@@ -47,9 +52,8 @@
 
     <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-3 sm:px-6">
-            <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="{{ $siteName }}, ir al inicio">
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
                 <span
-                    aria-hidden="true"
                     class="grid h-11 w-11 shrink-0 place-items-center rounded-xl border-2 border-brand font-display text-sm font-bold tracking-tight text-navy"
                 >
                     20 20
@@ -60,6 +64,7 @@
                         <span class="block text-xs text-slate-500">{{ $settings->tagline }}</span>
                     @endif
                 </span>
+                <span class="sr-only">Ir al inicio</span>
             </a>
 
             <nav aria-label="Navegación principal">
@@ -143,7 +148,7 @@
                     @foreach ($settings->weeklyHours() as $day)
                         <div class="flex justify-between gap-4">
                             <dt>{{ $day['day'] }}</dt>
-                            <dd class="{{ $day['hours'] ? 'text-slate-700' : 'text-slate-400' }}">
+                            <dd class="{{ $day['hours'] ? 'text-slate-700' : 'text-slate-500' }}">
                                 {{ $day['hours'] ?? 'Cerrado' }}
                             </dd>
                         </div>

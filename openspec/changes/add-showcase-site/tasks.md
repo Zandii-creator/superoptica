@@ -52,9 +52,9 @@
 
 ## 8. Identidad y rendimiento
 
-- [ ] 8.1 Definir los tokens de color y tipografía en Tailwind, auto-hospedar las fuentes e integrar el sello «20 20»; verificar el build y una revisión visual en móvil y escritorio.
-- [ ] 8.2 Aplicar accesibilidad (foco visible, etiquetas, textos alternativos y contraste) y verificar con Lighthouse una puntuación de accesibilidad de 90 o más.
-- [ ] 8.3 Optimizar el peso de la home por debajo de 500 KB sin imágenes diferidas; verificar con Lighthouse en red limitada y con el informe de peso.
+- [x] 8.1 Definir los tokens de color y tipografía en Tailwind, auto-hospedar las fuentes e integrar el sello «20 20»; verificar el build y una revisión visual en móvil y escritorio.
+- [x] 8.2 Aplicar accesibilidad (foco visible, etiquetas, textos alternativos y contraste) y verificar con Lighthouse una puntuación de accesibilidad de 90 o más.
+- [x] 8.3 Optimizar el peso de la home por debajo de 500 KB sin imágenes diferidas; verificar con Lighthouse en red limitada y con el informe de peso.
 
 ## 9. Despliegue y verificación
 
