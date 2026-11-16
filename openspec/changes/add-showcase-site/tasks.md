@@ -10,10 +10,10 @@
 
 ## 2. Modelo de datos y panel
 
-- [ ] 2.1 Escribir primero las pruebas de relaciones y valores por defecto (deben fallar), luego crear las migraciones de marcas, productos, variantes, servicios y ajustes con sus índices; verificar `php artisan migrate:fresh --seed` y las pruebas en verde, confirmando que solo se opera sobre `espejuelos`.
-- [ ] 2.2 Escribir primero las pruebas de visibilidad de borradores e inactivos (deben fallar), luego implementar modelos, relaciones y enums de tipo y género; verificar que las pruebas pasan.
-- [ ] 2.3 Escribir primero las pruebas de creación de un producto con variante e imagen, luego construir los recursos de Filament para marcas, productos y servicios; verificar las pruebas y la creación real en el panel.
-- [ ] 2.4 Escribir primero la prueba de que las taxonomías sembradas alimentan los filtros, luego crear los seeders de materiales, formas y datos iniciales; verificar que la prueba pasa y el catálogo muestra las opciones.
+- [x] 2.1 Escribir primero las pruebas de relaciones y valores por defecto (deben fallar), luego crear las migraciones de marcas, productos, variantes, servicios y ajustes con sus índices; verificar `php artisan migrate:fresh --seed` y las pruebas en verde, confirmando que solo se opera sobre `espejuelos`.
+- [x] 2.2 Escribir primero las pruebas de visibilidad de borradores e inactivos (deben fallar), luego implementar modelos, relaciones y enums de tipo y género; verificar que las pruebas pasan.
+- [x] 2.3 Escribir primero las pruebas de creación de un producto con variante e imagen, luego construir los recursos de Filament para marcas, productos y servicios; verificar las pruebas y la creación real en el panel.
+- [x] 2.4 Escribir primero la prueba de que las taxonomías sembradas alimentan los filtros, luego crear los seeders de materiales, formas y datos iniciales; verificar que la prueba pasa y el catálogo muestra las opciones.
 
 ## 3. Ajustes del sitio
 
