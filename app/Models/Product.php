@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Product extends Model implements HasMedia
 {
@@ -126,11 +127,17 @@ class Product extends Model implements HasMedia
         return $this->lens_width.'-'.$this->bridge_width.'-'.$this->temple_length;
     }
 
-    public function coverUrl(): ?string
+    public function coverUrl(string $conversion = 'card'): ?string
     {
-        $url = $this->getFirstMediaUrl('images');
+        $media = $this->getFirstMedia('images');
 
-        return $url !== '' ? $url : null;
+        if ($media === null) {
+            return null;
+        }
+
+        return $media->hasGeneratedConversion($conversion)
+            ? $media->getUrl($conversion)
+            : $media->getUrl();
     }
 
     public function isPubliclyVisible(): bool
@@ -143,5 +150,26 @@ class Product extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('images');
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(160)
+            ->height(120)
+            ->format('webp')
+            ->nonQueued();
+
+        $this->addMediaConversion('card')
+            ->width(480)
+            ->height(360)
+            ->format('webp')
+            ->nonQueued();
+
+        $this->addMediaConversion('detail')
+            ->width(960)
+            ->height(960)
+            ->format('webp')
+            ->nonQueued();
     }
 }

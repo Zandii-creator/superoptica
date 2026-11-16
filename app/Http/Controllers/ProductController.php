@@ -16,7 +16,6 @@ class ProductController extends Controller
         $product->load(['brand', 'material', 'shape', 'variants']);
 
         $settings = SiteSettings::current();
-        $variant = $product->variants->first();
         $image = $product->coverUrl();
 
         $structuredData = [
@@ -46,7 +45,6 @@ class ProductController extends Controller
 
         return view('products.show', [
             'product' => $product,
-            'variant' => $variant,
             'settings' => $settings,
             'title' => $product->displayName(),
             'description' => $product->short_description

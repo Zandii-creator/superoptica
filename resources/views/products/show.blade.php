@@ -16,31 +16,7 @@
 
         <div class="mt-6 grid gap-10 md:grid-cols-2">
             <div>
-                <div class="grid aspect-square place-items-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-                    @if ($product->coverUrl())
-                        <img
-                            src="{{ $product->coverUrl() }}"
-                            alt="Montura {{ $product->displayName() }}"
-                            width="720"
-                            height="720"
-                            decoding="async"
-                            class="h-full w-full object-contain p-6"
-                        >
-                    @else
-                        <svg
-                            viewBox="0 0 120 60"
-                            class="h-28 w-48 text-slate-300"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                            aria-hidden="true"
-                        >
-                            <circle cx="30" cy="30" r="17" />
-                            <circle cx="90" cy="30" r="17" />
-                            <path d="M47 30h26M13 22 4 16M107 22l9-6" stroke-linecap="round" />
-                        </svg>
-                    @endif
-                </div>
+                <livewire:product-gallery :product="$product" />
             </div>
 
             <div>
@@ -64,27 +40,7 @@
                     <p class="mt-5 text-base leading-relaxed text-slate-600">{{ $product->short_description }}</p>
                 @endif
 
-                @if ($product->variants->isNotEmpty())
-                    <div class="mt-6">
-                        <h2 class="font-display text-sm font-semibold uppercase tracking-widest text-slate-500">
-                            Colores disponibles
-                        </h2>
-                        <ul class="mt-3 flex flex-wrap gap-2">
-                            @foreach ($product->variants as $option)
-                                <li class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-700">
-                                    @if ($option->color_hex)
-                                        <span
-                                            aria-hidden="true"
-                                            class="h-4 w-4 rounded-full border border-slate-300"
-                                            style="background-color: {{ $option->color_hex }}"
-                                        ></span>
-                                    @endif
-                                    {{ $option->color_name }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <livewire:product-variant-selector :product="$product" />
 
                 <dl class="mt-6 divide-y divide-slate-100 rounded-2xl border border-slate-200">
                     <div class="flex justify-between gap-4 px-4 py-3 text-sm">
@@ -124,21 +80,6 @@
                         </div>
                     @endif
                 </dl>
-
-                @if ($settings->whatsapp_number)
-                    <a
-                        href="{{ \App\Support\WhatsApp::productLink($product, $variant) }}"
-                        class="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-brand px-6 py-3 font-semibold text-white transition hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:w-auto"
-                        rel="noopener"
-                        target="_blank"
-                    >
-                        Consultar por WhatsApp
-                    </a>
-                @endif
-
-                <p class="mt-4 text-sm text-slate-500">
-                    La compra se concreta en la tienda física o por WhatsApp.
-                </p>
             </div>
         </div>
 

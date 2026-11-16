@@ -33,10 +33,10 @@
 
 ## 5. Ficha de producto
 
-- [ ] 5.1 Escribir primero la prueba de campos opcionales omitidos (debe fallar), luego construir la ficha con marca, modelo, medidas, material, forma, género y descripción; verificar que la maquetación no se rompe y la prueba pasa.
-- [ ] 5.2 Escribir primero la prueba de cambio de variante y actualización de galería (debe fallar), luego implementar galería y selector de color con Livewire; verificar las pruebas y la interacción real.
-- [ ] 5.3 Escribir primero la prueba del enlace de WhatsApp con modelo y color (debe fallar), luego implementar el CTA; verificar el enlace generado y la prueba en verde.
-- [ ] 5.4 Escribir primero la prueba de que las imágenes se sirven con conversiones y carga diferida (debe fallar), luego configurar las conversiones WebP y miniaturas; verificar los archivos generados y los atributos de las imágenes.
+- [x] 5.1 Escribir primero la prueba de campos opcionales omitidos (debe fallar), luego construir la ficha con marca, modelo, medidas, material, forma, género y descripción; verificar que la maquetación no se rompe y la prueba pasa.
+- [x] 5.2 Escribir primero la prueba de cambio de variante y actualización de galería (debe fallar), luego implementar galería y selector de color con Livewire; verificar las pruebas y la interacción real.
+- [x] 5.3 Escribir primero la prueba del enlace de WhatsApp con modelo y color (debe fallar), luego implementar el CTA; verificar el enlace generado y la prueba en verde.
+- [x] 5.4 Escribir primero la prueba de que las imágenes se sirven con conversiones y carga diferida (debe fallar), luego configurar las conversiones WebP y miniaturas; verificar los archivos generados y los atributos de las imágenes.
 
 ## 6. Servicios
 
