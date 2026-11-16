@@ -58,10 +58,10 @@
 
 ## 9. Despliegue y verificación
 
-- [ ] 9.1 Preparar localmente la configuración de producción (variables de ejemplo, cachés de Laravel y respaldo de almacenamiento si `storage:link` falla) y verificar en un staging local; no ejecutar ninguna acción en cPanel.
-- [ ] 9.2 Redactar la instrucción manual para la entrada de cron de `php artisan schedule:run`, incluyendo comando, ruta y frecuencia; verificar el texto y entregarlo al usuario para que lo cree en cPanel.
-- [ ] 9.3 Redactar la guía de despliegue y reversión manual a la release anterior; verificar los pasos con el usuario en staging, sin que el agente ejecute nada en cPanel.
-- [ ] 9.4 Ejecutar la suite completa, registrar los resultados al 100% en `docs/verificacion.md` y verificar `openspec validate add-showcase-site --strict` sin errores; no cerrar el cambio si alguna prueba falla.
+- [x] 9.1 Preparar localmente la configuración de producción (variables de ejemplo, cachés de Laravel y respaldo de almacenamiento si `storage:link` falla) y verificar en un staging local; no ejecutar ninguna acción en cPanel.
+- [x] 9.2 Redactar la instrucción manual para la entrada de cron de `php artisan schedule:run`, incluyendo comando, ruta y frecuencia; verificar el texto y entregarlo al usuario para que lo cree en cPanel.
+- [x] 9.3 Redactar la guía de despliegue y reversión manual a la release anterior; verificar los pasos con el usuario en staging, sin que el agente ejecute nada en cPanel.
+- [x] 9.4 Ejecutar la suite completa, registrar los resultados al 100% en `docs/verificacion.md` y verificar `openspec validate add-showcase-site --strict` sin errores; no cerrar el cambio si alguna prueba falla.
 
 ## Workflow follow-up
 

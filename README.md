@@ -79,10 +79,27 @@ En producción, `AdminUserSeeder` exige `ADMIN_PASSWORD`.
 & $php vendor/bin/pint --test
 ```
 
-La suite cubre visibilidad de productos, filtros por URL, búsqueda sin JavaScript, estados vacíos, formato de precios en CUP, enlaces de WhatsApp, SEO, sitemap y el panel.
+La suite cubre visibilidad de productos, filtros por URL, búsqueda sin JavaScript, estados vacíos, formato de precios en CUP, enlaces de WhatsApp, SEO, sitemap, accesibilidad y el panel.
+
+## Despliegue
+
+La guía completa está en [`docs/despliegue.md`](docs/despliegue.md) y los resultados de la última verificación en [`docs/verificacion.md`](docs/verificacion.md).
+
+Resumen:
+
+1. Compila en local (`npm run build`) y sube `public/build` y `public/fonts`.
+2. Configura el `.env` de producción con la base `espejuelos`.
+3. Ejecuta `composer install --no-dev`, `php artisan migrate --force`, `php artisan storage:link` y `php artisan optimize`.
+4. Crea a mano el cron de Laravel en cPanel (cada minuto):
+
+```bash
+/usr/local/bin/php /home/USUARIO/superoptica/artisan schedule:run >> /home/USUARIO/superoptica/storage/logs/scheduler.log 2>&1
+```
+
+5. Para revertir, vuelve a la release anterior y conserva el respaldo de la base.
 
 ## Operación
 
 - Solo se opera sobre la base `espejuelos`; no hay conexiones auxiliares.
 - Ningún cambio en cPanel se ejecuta desde el proyecto: se documenta para que lo aplique el usuario.
-- Los assets compilados (`public/build`) y los publicados de Filament se versionan porque el servidor no ejecuta Node.
+- Los assets compilados (`public/build`), las fuentes (`public/fonts`) y los publicados de Filament se versionan porque el servidor no ejecuta Node.
