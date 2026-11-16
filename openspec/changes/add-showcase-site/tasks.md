@@ -2,11 +2,11 @@
 
 ## 1. Base del proyecto
 
-- [ ] 1.1 Crear el proyecto Laravel 12 e instalar Livewire 3, Tailwind 4 y Filament; verificar que `php artisan about` y `npm run build` terminan sin errores.
-- [ ] 1.2 Configurar la conexión a la base de datos `espejuelos` y verificar con `php artisan db:show` que solo esa base está configurada, sin conexiones auxiliares ni acceso a otras bases del servidor.
-- [ ] 1.3 Crear el usuario administrador inicial y verificar el acceso a `/admin` con autenticación.
-- [ ] 1.4 Crear `AGENTS.md` con propósito, stack, comandos reales y convenciones; verificar que cada comando documentado existe y se ejecuta.
-- [ ] 1.5 Configurar Pint y el estilo base; verificar `./vendor/bin/pint --test` sin diferencias.
+- [x] 1.1 Crear el proyecto Laravel 12 e instalar Livewire 3, Tailwind 4 y Filament; verificar que `php artisan about` y `npm run build` terminan sin errores.
+- [x] 1.2 Configurar la conexión a la base de datos `espejuelos` y verificar con `php artisan db:show` que solo esa base está configurada, sin conexiones auxiliares ni acceso a otras bases del servidor.
+- [x] 1.3 Crear el usuario administrador inicial y verificar el acceso a `/admin` con autenticación.
+- [x] 1.4 Crear `AGENTS.md` con propósito, stack, comandos reales y convenciones; verificar que cada comando documentado existe y se ejecuta.
+- [x] 1.5 Configurar Pint y el estilo base; verificar `./vendor/bin/pint --test` sin diferencias.
 
 ## 2. Modelo de datos y panel
 
