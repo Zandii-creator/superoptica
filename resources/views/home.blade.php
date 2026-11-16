@@ -133,6 +133,15 @@
                         Abrir la ubicación en el mapa
                     </a>
                 @endif
+
+                <p class="mt-4">
+                    <a
+                        href="{{ route('store.index') }}"
+                        class="text-sm font-semibold text-brand underline-offset-4 hover:underline"
+                    >
+                        Ver horarios y cómo llegar
+                    </a>
+                </p>
             </div>
 
             <div>

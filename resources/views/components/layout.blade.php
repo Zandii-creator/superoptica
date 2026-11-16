@@ -101,7 +101,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home') }}#tienda" class="rounded-md py-1 text-navy transition hover:text-brand">
+                        <a
+                            href="{{ route('store.index') }}"
+                            @class([
+                                'rounded-md py-1 transition hover:text-brand',
+                                'text-brand' => request()->routeIs('store.*'),
+                                'text-navy' => ! request()->routeIs('store.*'),
+                            ])
+                        >
                             Tienda
                         </a>
                     </li>
@@ -115,7 +122,7 @@
     </main>
 
     <footer class="mt-16 border-t border-slate-200 bg-slate-50">
-        <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
+        <div class="mx-auto grid max-w-6xl gap-10 px-4 pt-12 pb-24 sm:px-6 sm:pb-12 md:grid-cols-3">
             <div>
                 <p class="font-display text-lg font-semibold text-navy">{{ $siteName }}</p>
                 @if ($settings->tagline)
@@ -207,5 +214,7 @@
             </div>
         </div>
     </footer>
+
+    <x-whatsapp-button :settings="$settings" />
 </body>
 </html>

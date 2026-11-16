@@ -45,10 +45,10 @@
 
 ## 7. Tienda y contacto
 
-- [ ] 7.1 Escribir primero las pruebas de dirección completa, referencia entre calles y horarios con días cerrados (deben fallar), luego construir el bloque de tienda; verificar las pruebas en verde.
-- [ ] 7.2 Escribir primero la prueba de que la carga inicial no solicita mapas de terceros (debe fallar), luego añadir la referencia de mapa estática y el enlace externo; verificar el HTML y la prueba.
-- [ ] 7.3 Escribir primero las pruebas de etiqueta accesible y foco por teclado del botón flotante (deben fallar), luego implementarlo; verificar las pruebas y que no cubre acciones en 360 px.
-- [ ] 7.4 Escribir primero las pruebas de los enlaces `tel:` y `t.me` (deben fallar), luego añadirlos; verificar que abren el destino correcto y las pruebas pasan.
+- [x] 7.1 Escribir primero las pruebas de dirección completa, referencia entre calles y horarios con días cerrados (deben fallar), luego construir el bloque de tienda; verificar las pruebas en verde.
+- [x] 7.2 Escribir primero la prueba de que la carga inicial no solicita mapas de terceros (debe fallar), luego añadir la referencia de mapa estática y el enlace externo; verificar el HTML y la prueba.
+- [x] 7.3 Escribir primero las pruebas de etiqueta accesible y foco por teclado del botón flotante (deben fallar), luego implementarlo; verificar las pruebas y que no cubre acciones en 360 px.
+- [x] 7.4 Escribir primero las pruebas de los enlaces `tel:` y `t.me` (deben fallar), luego añadirlos; verificar que abren el destino correcto y las pruebas pasan.
 
 ## 8. Identidad y rendimiento
 
