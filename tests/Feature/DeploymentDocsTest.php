@@ -45,6 +45,47 @@ class DeploymentDocsTest extends TestCase
         }
     }
 
+    public function test_the_deployment_guide_covers_the_shared_hosting_without_ssh(): void
+    {
+        $guide = strtolower(file_get_contents(base_path('docs/despliegue.md')));
+
+        foreach ([
+            'sin ssh',
+            'sin terminal',
+            'public_html/superoptica',
+            'superoptica-app',
+            'dominio/superoptica',
+            'database/espejuelos.sqlite',
+            'trabajos de cron',
+        ] as $needle) {
+            $this->assertStringContainsString($needle, $guide, "La guía no menciona: {$needle}");
+        }
+    }
+
+    public function test_the_deployment_guide_records_the_verified_installation(): void
+    {
+        $guide = strtolower(file_get_contents(base_path('docs/despliegue.md')));
+
+        foreach ([
+            '/home/dtaameri/superoptica-app',
+            '/home/dtaameri/public_html/superoptica',
+            'dtaamerica.com/superoptica',
+            '/usr/local/bin/ea-php83',
+            'deploy.log',
+            '*/5',
+        ] as $needle) {
+            $this->assertStringContainsString($needle, $guide, "La guía no registra: {$needle}");
+        }
+    }
+
+    public function test_the_deployment_guide_explains_that_the_admin_email_is_not_a_mailbox(): void
+    {
+        $guide = strtolower(file_get_contents(base_path('docs/despliegue.md')));
+
+        $this->assertStringContainsString('admin_email', $guide);
+        $this->assertStringContainsString('no es una cuenta de correo', $guide);
+    }
+
     public function test_the_cron_instruction_contains_the_command_the_path_and_the_frequency(): void
     {
         $guide = file_get_contents(base_path('docs/despliegue.md'));

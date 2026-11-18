@@ -85,21 +85,47 @@ La suite cubre visibilidad de productos, filtros por URL, búsqueda sin JavaScri
 
 La guía completa está en [`docs/despliegue.md`](docs/despliegue.md) y los resultados de la última verificación en [`docs/verificacion.md`](docs/verificacion.md).
 
-Resumen:
+El hosting es compartido y **no tiene SSH ni Terminal**. El sitio está publicado en
+`https://dtaamerica.com/superoptica` (cPanel `dtaameri`), con la aplicación fuera de la web:
 
-1. Compila en local (`npm run build`) y sube `public/build` y `public/fonts`.
-2. Configura el `.env` de producción con la base `espejuelos`.
-3. Ejecuta `composer install --no-dev`, `php artisan migrate --force`, `php artisan storage:link` y `php artisan optimize`.
-4. Crea a mano el cron de Laravel en cPanel (cada minuto):
+| Concepto | Ruta |
+|---|---|
+| Aplicación | `/home/dtaameri/superoptica-app` |
+| Carpeta publicada | `/home/dtaameri/public_html/superoptica` |
+| Base de datos | `dtaameri_espejuelos` (es la base `espejuelos`) |
+| PHP para cron | `/usr/local/bin/ea-php83` |
+| Enlace de imágenes | `public_html/superoptica/storage` → `superoptica-app/storage/app/public` |
+
+Primera publicación:
+
+1. Ejecuta `.\scripts\build-deploy.ps1`: corre pruebas, formato, `npm run build`,
+   `composer install --no-dev` en una copia y deja dos zip en `storage/app/deploy/`
+   (`superoptica-app-*.zip` y `superoptica-public-*.zip`) más la `APP_KEY` generada.
+   El script no sube nada ni toca cPanel.
+2. Sube y extrae el zip de la app en `/home/dtaameri/superoptica-app`, y el zip público en
+   `/home/dtaameri/public_html/superoptica`.
+3. Configura el `.env` de producción (`APP_URL=https://dtaamerica.com/superoptica`, base
+   `dtaameri_espejuelos`) y crea a mano el usuario de MySQL en cPanel.
+4. Ejecuta `migrate --force`, `db:seed --force` y `optimize` mediante **Trabajos de cron**
+   (minuto `*/5`, resto en `*`), que son la única forma de lanzar `artisan` sin SSH. Borra
+   cada tarea puntual después de comprobar `storage/logs/deploy.log`.
+5. Crea una sola vez el enlace de las imágenes:
+   `ln -s /home/dtaameri/superoptica-app/storage/app/public /home/dtaameri/public_html/superoptica/storage`.
+   Si el hosting bloquea enlaces simbólicos, copia los archivos después de cada subida.
+6. Deja creado el cron permanente del planificador (cada minuto):
 
 ```bash
-/usr/local/bin/php /home/USUARIO/superoptica/artisan schedule:run >> /home/USUARIO/superoptica/storage/logs/scheduler.log 2>&1
+/usr/local/bin/ea-php83 /home/dtaameri/superoptica-app/artisan schedule:run >> /home/dtaameri/superoptica-app/storage/logs/scheduler.log 2>&1
 ```
 
-5. Para revertir, vuelve a la release anterior y conserva el respaldo de la base.
+Actualizaciones: genera un zip nuevo y extráelo **sobre** las carpetas existentes (conserva
+`.env`, `storage` y el enlace), borra los `.php` de `bootstrap/cache`, lanza `migrate
+--force` y `optimize` por cron y verifica el sitio. Para revertir, extrae el zip anterior y
+conserva el respaldo de la base; nunca uses `migrate:fresh` en producción.
 
 ## Operación
 
 - Solo se opera sobre la base `espejuelos`; no hay conexiones auxiliares.
 - Ningún cambio en cPanel se ejecuta desde el proyecto: se documenta para que lo aplique el usuario.
+- `scripts/build-deploy.ps1` solo empaqueta en local: no sube archivos, no llama a la API de cPanel y no toca la base.
 - Los assets compilados (`public/build`), las fuentes (`public/fonts`) y los publicados de Filament se versionan porque el servidor no ejecuta Node.

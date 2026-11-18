@@ -1,23 +1,48 @@
 # Verificación de la implementación
 
-- **Fecha:** 16 de noviembre de 2026
+- **Fecha:** 17 de noviembre de 2026
 - **Cambio:** `add-showcase-site`
 - **Entorno local:** Windows, PHP 8.3.36, Laravel 12, Livewire 3, Filament 4, SQLite en `database/espejuelos.sqlite`
-- **Producción:** pendiente de despliegue manual en cPanel; esta verificación no ejecuta nada en el servidor.
+- **Producción:** publicada el 17/11/2026 en cPanel compartido (`dtaameri`), sin SSH ni Terminal
 
 ## Resultado general
 
 | Comprobación | Comando | Resultado |
 |---|---|---|
-| Suite completa | `php artisan test` | **125 pruebas, 530 aserciones — 100 % en verde** |
+| Suite completa | `php artisan test` | **130 pruebas, 560 aserciones — 100 % en verde** |
 | Formato | `php vendor/bin/pint --test` | Sin diferencias |
 | Assets | `npm run build` | Compilado sin errores |
+| Paquete de despliegue | `scripts/build-deploy.ps1` | Genera los dos zip y el resumen sin errores |
 | OpenSpec | `openspec validate add-showcase-site --strict` | Cambio válido |
 | Accesibilidad | Lighthouse en `/`, `/catalogo`, `/servicios`, `/tienda` | **100 / 100** en las cuatro páginas |
 | Buenas prácticas | Lighthouse | **100 / 100** |
 | SEO | Lighthouse | **100 / 100** |
 | Peso de la home | Informe de red | **≈ 225 KB** (límite: 500 KB) |
 | Móvil 360 px | Revisión en navegador | Sin desbordamiento horizontal |
+
+## Producción
+
+| Concepto | Valor |
+|---|---|
+| URL | `https://dtaamerica.com/superoptica` |
+| Aplicación | `/home/dtaameri/superoptica-app` (fuera de `public_html`) |
+| Carpeta publicada | `/home/dtaameri/public_html/superoptica` |
+| Base de datos | `dtaameri_espejuelos` (la base `espejuelos`) |
+| PHP | 8.3 (`ea-php83`) |
+| Binario PHP del cron | `/usr/local/bin/ea-php83` |
+| Enlace de imágenes | `public_html/superoptica/storage` → `superoptica-app/storage/app/public` |
+
+Ejecutado en el servidor el 17/11/2026:
+
+1. 11 migraciones aplicadas por un cron puntual (`deploy.log`).
+2. `AdminUserSeeder` y `CatalogDataSeeder` ejecutados por cron.
+3. `php artisan optimize` ejecutado por cron (configuración, rutas, vistas y Filament).
+4. Enlace de `storage` creado con `ln -s` y verificado en el Administrador de archivos.
+5. Cron puntuales borrados; queda solo `schedule:run` cada minuto.
+6. Sitio comprobado en `/`, `/catalogo`, `/servicios`, `/tienda`, `/sitemap.xml`, `/up` y `/admin`.
+
+La guía con los comandos exactos, el flujo de actualización y los problemas ya encontrados
+está en [`docs/despliegue.md`](despliegue.md).
 
 ## Suite de pruebas
 
@@ -39,6 +64,8 @@ Cubre, entre otros:
 - Botón flotante de WhatsApp con etiqueta accesible.
 - Ajustes del sitio, caché, validación, SEO, `sitemap.xml` y panel de Filament.
 - Fuentes auto-hospedadas, favicon «20 20», textos alternativos y enlaces de contacto.
+- Guía de despliegue, `.env` de producción y paquete generado por `scripts/build-deploy.ps1`
+  (sin `.env`, `.sqlite`, `node_modules` ni dependencias de desarrollo).
 
 ## Lighthouse
 
@@ -79,20 +106,12 @@ tal como exige la tarea 8.3.
   Google Maps, OpenStreetMap, Mapbox o Bing al cargar.
 - A 360 px no hay desplazamiento horizontal en `/`, `/catalogo`, `/servicios` ni `/tienda`.
 
-## Pendiente de ejecución manual (cPanel)
-
-Estas acciones **no** se ejecutaron y quedan a cargo del usuario, según
-`docs/despliegue.md`:
-
-1. Respaldo de `espejuelos` y de `storage/app/public`.
-2. Creación del `.env` de producción y `php artisan key:generate`.
-3. `composer install --no-dev`, `php artisan migrate --force`, `storage:link` y `optimize`.
-4. Publicación del dominio y creación manual del cron de `schedule:run`.
-5. Verificación de las rutas públicas y del panel en el servidor.
-
 ## Conclusión
 
 La suite completa pasa al 100 %, el formato está limpio, el cambio valida con
-`openspec validate --strict` y las páginas públicas cumplen accesibilidad, SEO y
-peso. El cambio puede pasar a revisión del negocio y archivarse después de la
-publicación manual.
+`openspec validate --strict`, las páginas públicas cumplen accesibilidad, SEO y peso, y el
+sitio está publicado y verificado en cPanel. El cambio puede archivarse.
+
+Toda actualización futura sigue el flujo de `docs/despliegue.md`: nuevo zip, extracción
+sobre las carpetas existentes, borrado de `bootstrap/cache/*.php` y `migrate`/`optimize`
+por cron puntual.
