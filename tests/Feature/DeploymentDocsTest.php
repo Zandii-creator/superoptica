@@ -86,6 +86,23 @@ class DeploymentDocsTest extends TestCase
         $this->assertStringContainsString('no es una cuenta de correo', $guide);
     }
 
+    public function test_the_deployment_guide_explains_that_the_admin_name_is_not_the_login(): void
+    {
+        $guide = strtolower(file_get_contents(base_path('docs/despliegue.md')));
+
+        $this->assertStringContainsString('admin_name', $guide);
+        $this->assertStringContainsString('no se usa para iniciar sesión', $guide);
+        $this->assertStringContainsString('tabla `users`', $guide);
+    }
+
+    public function test_the_deployment_guide_explains_the_published_livewire_assets(): void
+    {
+        $guide = file_get_contents(base_path('docs/despliegue.md'));
+
+        $this->assertStringContainsString('livewire:publish --assets', $guide);
+        $this->assertStringContainsString('public/vendor/livewire', $guide);
+    }
+
     public function test_the_cron_instruction_contains_the_command_the_path_and_the_frequency(): void
     {
         $guide = file_get_contents(base_path('docs/despliegue.md'));

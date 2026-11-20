@@ -62,7 +62,8 @@ El script:
 1. `composer install` para tener las dependencias de desarrollo.
 2. `php artisan test` y `pint --test`; si algo falla, se detiene.
 3. `npm run build` (instala las dependencias de Node si falta `node_modules`).
-4. `php artisan optimize:clear` y `filament:upgrade`.
+4. `php artisan optimize:clear`, `filament:upgrade` y `livewire:publish --assets`; esto
+   deja el JavaScript de Livewire en `public/vendor/livewire`.
 5. Genera una `APP_KEY` nueva y la imprime. Solo se usa la primera vez; en las
    actualizaciones conserva la clave del `.env` del servidor.
 6. Copia el proyecto a una carpeta temporal y quita `.env`, `database/*.sqlite`,
@@ -85,6 +86,17 @@ Requisitos:
 
 - La suite completa debe pasar al 100 %.
 - `public/build` y `public/fonts` se compilan en local: el servidor no ejecuta Node.
+- El zip público incluye `public/vendor/livewire`. Es obligatorio: sin esos archivos, el
+  navegador pide `/livewire/livewire.min.js` en la raíz del dominio, que no existe, y el
+  formulario de `/admin` queda sin JavaScript.
+- El zip de la aplicación también incluye `public/vendor/livewire` (en
+  `superoptica-app/public`). No se sirve desde ahí, pero Livewire comprueba
+  `public_path('vendor/livewire/manifest.json')` para decidir la URL del script. Extrae
+  **los dos** zip: si solo extraes el público, la página sigue pidiendo `/livewire/...` en
+  la raíz.
+- `app/Providers/AppServiceProvider.php` corrige la URL de actualización de Livewire para
+  que incluya el subdirectorio (`/superoptica/livewire/update`). Sin ese ajuste, el login
+  envía el formulario a `/livewire/update`, que da 404 en este hosting.
 - El `vendor` debe generarse con PHP 8.3, la misma versión del servidor.
 - Los zip no incluyen `.env` ni `database/espejuelos.sqlite`; si alguna vez empaquetas a
   mano, tampoco los incluyas.
@@ -167,8 +179,8 @@ No crees ni importes nada en otras bases del servidor.
 1. Crea `/home/dtaameri/superoptica-app` y extrae allí el zip de la aplicación. El
    contenido debe quedar directamente en esa carpeta (`artisan`, `app/`, `vendor/`...).
 2. Crea `/home/dtaameri/public_html/superoptica` y extrae allí el zip público. Ya incluye
-   `.htaccess`, `build`, `fonts`, `css`, `js`, favicons, `robots.txt` y el `index.php`
-   adaptado (plantilla `deploy/public-index.php`).
+   `.htaccess`, `build`, `fonts`, `css`, `js`, `vendor/livewire`, favicons, `robots.txt` y
+   el `index.php` adaptado (plantilla `deploy/public-index.php`).
 3. Si el zip supera el límite de subida, usa FTP o divide el archivo.
 
 ### 3.3 `.env`
@@ -217,6 +229,7 @@ Notas:
   URLs de las imágenes apuntan a la raíz del dominio.
 - `DB_DATABASE` y `DB_USERNAME` llevan el nombre completo con prefijo. Sigue siendo la
   misma base `espejuelos`; no se configura ninguna otra.
+- `ADMIN_NAME` es solo el nombre visible del usuario (por ejemplo, `Alexander`); no se usa para iniciar sesión.
 - `ADMIN_EMAIL` es solo el correo con el que se entra en `/admin`. **No es una cuenta de correo de cPanel**
   y no hace falta crearla: `MAIL_MAILER=log`, el panel no tiene recuperación de contraseña
   y el sitio no envía correos. Usa una dirección que controles por si algún día activas avisos.
@@ -375,7 +388,10 @@ se recrea con el seeder, no se importa.
 - `/catalogo`, `/servicios`, `/tienda` — navegación, filtros por URL y paginación.
 - `/sitemap.xml` — URLs con el prefijo `/superoptica`.
 - `/robots.txt` y `/up` (debe responder 200).
-- `/admin` — inicio de sesión con `ADMIN_EMAIL` y `ADMIN_PASSWORD`.
+- `/admin` — inicio de sesión con `ADMIN_EMAIL` y `ADMIN_PASSWORD`. El formulario debe
+  responder al enviar; si no lo hace, revisa que exista
+  `superoptica-app/public/vendor/livewire/manifest.json` y que los archivos estén
+  publicados en `public_html/superoptica/vendor/livewire/`.
 - Una ficha con foto: imagen visible y enlace de WhatsApp con modelo y color.
 - HTTPS sin contenido mixto.
 
@@ -395,6 +411,9 @@ archivos. Antes de tener tablas, ese log acumula errores normales de tablas inex
 | Imágenes rotas | Enlace de `storage` ausente o roto | Repite el `ln -s`; si el hosting no lo permite, copia los archivos |
 | 404 en `/catalogo` pero `/` responde | Falta `.htaccess` o `mod_rewrite` | Extrae de nuevo el zip público; si persiste, añade `RewriteBase /superoptica/` |
 | El login no se mantiene | `APP_URL` o `SESSION_DOMAIN` | `APP_URL` con `/superoptica` y `SESSION_DOMAIN=null`; limpia caché |
+| No deja entrar en `/admin` y marca el campo de correo | Se escribió el nombre (`ADMIN_NAME`) en el campo de correo | Entra con el valor de `ADMIN_EMAIL`, que es el `email` de la tabla `users`; el nombre no sirve como usuario |
+| El formulario de `/admin` no responde o rechaza credenciales correctas | Livewire carga su JS desde `/livewire/...` en la raíz del dominio y da 404 | Deben existir `public_html/superoptica/vendor/livewire/` y `superoptica-app/public/vendor/livewire/manifest.json`; extrae los dos zip (el público sirve el JS y el de la app permite detectarlo) |
+| Tras enviar el login aparece un 404 en `https://DOMINIO/livewire/update` | Livewire genera la URL de actualización sin el subdirectorio | Sube `app/Providers/AppServiceProvider.php` actualizado; devuelve `url('/livewire/update')` y no requiere tocar `.env` |
 | `could not find driver` | Falta `pdo_mysql` | Actívalo en **Select PHP Version** → Extensiones |
 
 ## 8. Restricciones permanentes

@@ -123,9 +123,19 @@ Actualizaciones: genera un zip nuevo y extráelo **sobre** las carpetas existent
 --force` y `optimize` por cron y verifica el sitio. Para revertir, extrae el zip anterior y
 conserva el respaldo de la base; nunca uses `migrate:fresh` en producción.
 
+Livewire en el subdirectorio: `scripts/build-deploy.ps1` ejecuta
+`php artisan livewire:publish --assets`, así que los dos zip incluyen
+`public/vendor/livewire` (el público lo sirve y el de la app permite que Livewire detecte su
+manifest). Además, `app/Providers/AppServiceProvider.php` enlaza una subclase de
+`HandleRequests` para que la URL de actualización sea `url('/livewire/update')` e incluya
+`/superoptica`; sin ese ajuste el formulario de `/admin` envía a `/livewire/update` y
+devuelve 404. Si `/admin` deja de responder, revisa primero esas dos rutas.
+
 ## Operación
 
 - Solo se opera sobre la base `espejuelos`; no hay conexiones auxiliares.
 - Ningún cambio en cPanel se ejecuta desde el proyecto: se documenta para que lo aplique el usuario.
 - `scripts/build-deploy.ps1` solo empaqueta en local: no sube archivos, no llama a la API de cPanel y no toca la base.
-- Los assets compilados (`public/build`), las fuentes (`public/fonts`) y los publicados de Filament se versionan porque el servidor no ejecuta Node.
+- Los assets compilados (`public/build`), las fuentes (`public/fonts`), los publicados de
+  Filament y los de Livewire (`public/vendor/livewire`) se versionan porque el servidor no
+  ejecuta Node ni puede publicarlos por sí solo.

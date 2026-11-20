@@ -202,7 +202,7 @@ try {
         }
     }
 
-    Write-Step 'Limpiando caches y publicando assets de Filament'
+    Write-Step 'Limpiando caches y publicando assets de Filament y Livewire'
     Push-Location $projectRoot
     try {
         & $php $artisan optimize:clear
@@ -210,6 +210,12 @@ try {
 
         & $php $artisan filament:upgrade
         Assert-LastExitCode 'Fallo filament:upgrade'
+
+        # Livewire publica su JS en public/vendor/livewire. Sin estos archivos, el
+        # panel y los componentes usan la ruta /livewire/... de la raiz del dominio,
+        # que no existe cuando la app se publica en /superoptica.
+        & $php $artisan livewire:publish --assets
+        Assert-LastExitCode 'Fallo livewire:publish --assets'
     } finally {
         Pop-Location
     }
@@ -301,15 +307,17 @@ try {
         '  (Solo se usa al crear el .env la primera vez. En actualizaciones, conserva la del servidor.)',
         '',
         'Pasos (detalle en docs/despliegue.md):',
-        '  1. Subir y extraer el zip de la aplicacion en /home/USUARIO/superoptica-app',
-        '  2. Crear el .env con APP_URL=https://DOMINIO/superoptica y la APP_KEY de arriba',
-        '  3. Subir y extraer el zip publico en /home/USUARIO/public_html/superoptica',
+        '  1. Subir y extraer el zip de la aplicacion en /home/dtaameri/superoptica-app',
+        '     (incluye public/vendor/livewire, necesario para que Livewire detecte sus assets)',
+        '  2. Crear el .env con APP_URL=https://dtaamerica.com/superoptica y la APP_KEY de arriba',
+        '  3. Subir y extraer el zip publico en /home/dtaameri/public_html/superoptica',
         '  4. Enlazar las imagenes una sola vez:',
-        '     ln -s /home/USUARIO/superoptica-app/storage/app/public /home/USUARIO/public_html/superoptica/storage',
-        '  5. Ejecutar con Trabajos de cron y borrar cada tarea al terminar:',
-        '     /opt/cpanel/ea-php83/root/usr/bin/php /home/USUARIO/superoptica-app/artisan migrate --force',
-        '     /opt/cpanel/ea-php83/root/usr/bin/php /home/USUARIO/superoptica-app/artisan db:seed --force',
-        '     /opt/cpanel/ea-php83/root/usr/bin/php /home/USUARIO/superoptica-app/artisan optimize',
+        '     ln -s /home/dtaameri/superoptica-app/storage/app/public /home/dtaameri/public_html/superoptica/storage',
+        '  5. Ejecutar con Trabajos de cron (minuto */5, resto en *) y borrar cada tarea al terminar:',
+        '     /usr/local/bin/ea-php83 /home/dtaameri/superoptica-app/artisan migrate --force',
+        '     /usr/local/bin/ea-php83 /home/dtaameri/superoptica-app/artisan db:seed --force',
+        '     /usr/local/bin/ea-php83 /home/dtaameri/superoptica-app/artisan optimize',
+        '  6. En actualizaciones, borrar los .php de superoptica-app/bootstrap/cache antes de optimize.',
         '',
         'Este script no sube nada ni toca la base de datos.'
     )

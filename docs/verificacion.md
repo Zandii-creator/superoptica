@@ -1,15 +1,15 @@
 # Verificación de la implementación
 
-- **Fecha:** 17 de noviembre de 2026
+- **Fecha:** 19 de noviembre de 2026
 - **Cambio:** `add-showcase-site`
-- **Entorno local:** Windows, PHP 8.3.36, Laravel 12, Livewire 3, Filament 4, SQLite en `database/espejuelos.sqlite`
-- **Producción:** publicada el 17/11/2026 en cPanel compartido (`dtaameri`), sin SSH ni Terminal
+- **Entorno local:** Windows, PHP 8.3.36, Laravel 12, Livewire 3.8.11, Filament 4, SQLite en `database/espejuelos.sqlite`
+- **Producción:** publicada el 17/11/2026 en cPanel compartido (`dtaameri`), sin SSH ni Terminal; ajustes de Livewire del 19/11/2026
 
 ## Resultado general
 
 | Comprobación | Comando | Resultado |
 |---|---|---|
-| Suite completa | `php artisan test` | **130 pruebas, 560 aserciones — 100 % en verde** |
+| Suite completa | `php artisan test` | **136 pruebas, 577 aserciones — 100 % en verde** |
 | Formato | `php vendor/bin/pint --test` | Sin diferencias |
 | Assets | `npm run build` | Compilado sin errores |
 | Paquete de despliegue | `scripts/build-deploy.ps1` | Genera los dos zip y el resumen sin errores |
@@ -44,6 +44,27 @@ Ejecutado en el servidor el 17/11/2026:
 La guía con los comandos exactos, el flujo de actualización y los problemas ya encontrados
 está en [`docs/despliegue.md`](despliegue.md).
 
+## Incidencias de Livewire en el subdirectorio
+
+`/admin` quedó publicado, pero el formulario de acceso no respondía porque Livewire resolvía
+sus dos URLs contra la raíz del dominio en lugar de `/superoptica`. Ambas se corrigieron y
+quedaron cubiertas por pruebas:
+
+| Síntoma | Causa | Corrección |
+|---|---|---|
+| El navegador pedía `https://dtaamerica.com/livewire/livewire.min.js` (404) y el formulario no enviaba nada | Livewire genera la URL del script desde la raíz cuando no encuentra su manifest publicado | `php artisan livewire:publish --assets` deja `public/vendor/livewire`; se sube en el zip público y en el de la aplicación (`superoptica-app/public/vendor/livewire`) |
+| Tras el login, la acción iba a `https://dtaamerica.com/livewire/update` (404) | `getUpdateUri()` usa `toRoute(..., false)`, que descarta el base path | `AppServiceProvider` enlaza una subclase de `HandleRequests` que devuelve `url('/livewire/update')` |
+
+Comprobado en producción:
+
+- `https://dtaamerica.com/superoptica/vendor/livewire/livewire.min.js` → **200**.
+- `https://dtaamerica.com/superoptica/livewire/update` → **419** (la ruta existe; falta el token CSRF), frente a **404** en la raíz.
+
+Las credenciales sembradas (`ADMIN_EMAIL` / `ADMIN_PASSWORD`) se probaron en local con el
+formulario real de Filament: autentican correctamente; el fallo nunca estuvo en la clave.
+Queda pendiente confirmar el login completo en producción después de subir el parche de
+`app/Providers/AppServiceProvider.php`.
+
 ## Suite de pruebas
 
 ```
@@ -66,6 +87,8 @@ Cubre, entre otros:
 - Fuentes auto-hospedadas, favicon «20 20», textos alternativos y enlaces de contacto.
 - Guía de despliegue, `.env` de producción y paquete generado por `scripts/build-deploy.ps1`
   (sin `.env`, `.sqlite`, `node_modules` ni dependencias de desarrollo).
+- Acceso al panel con las credenciales sembradas, assets de Livewire publicados y URLs de
+  assets y de actualización que conservan el subdirectorio `/superoptica`.
 
 ## Lighthouse
 
@@ -110,7 +133,9 @@ tal como exige la tarea 8.3.
 
 La suite completa pasa al 100 %, el formato está limpio, el cambio valida con
 `openspec validate --strict`, las páginas públicas cumplen accesibilidad, SEO y peso, y el
-sitio está publicado y verificado en cPanel. El cambio puede archivarse.
+sitio está publicado en cPanel. El acceso al panel quedó corregido en local y las dos URLs
+de Livewire ya apuntan al subdirectorio; solo falta confirmar el login completo en
+producción tras subir el parche del proveedor.
 
 Toda actualización futura sigue el flujo de `docs/despliegue.md`: nuevo zip, extracción
 sobre las carpetas existentes, borrado de `bootstrap/cache/*.php` y `migrate`/`optimize`

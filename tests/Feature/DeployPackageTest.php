@@ -19,6 +19,7 @@ class DeployPackageTest extends TestCase
             '*.sqlite',
             'superoptica-public-',
             'public_html/superoptica',
+            'livewire:publish --assets',
             'zipfile',
         ] as $needle) {
             $this->assertStringContainsString($needle, $script, "El script no incluye: {$needle}");
