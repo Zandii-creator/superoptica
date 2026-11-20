@@ -24,7 +24,7 @@ patrón `https://DOMINIO/superoptica`; en este caso, `https://dtaamerica.com/sup
 | Logs | `superoptica-app/storage/logs/laravel.log`, `deploy.log`, `scheduler.log` |
 | Zona horaria del cron | **No es la de Cuba**; programa con `*/5` o mira la hora del servidor |
 | Enlace de imágenes | `public_html/superoptica/storage` → `superoptica-app/storage/app/public` (creado y verificado) |
-| Estado | Publicada el 17/11/2026: migraciones, seeders y `optimize` ejecutados por cron |
+| Estado | Publicada el 17/11/2026; assets y URL de Livewire corregidos el 19/11/2026 y login de `/admin` confirmado el 20/11/2026 |
 
 La hora del servidor se ve en la columna **Last Modified** del Administrador de archivos.
 Fiarse de la hora de Cuba para programar un cron ha fallado ya una vez: una tarea fijada a

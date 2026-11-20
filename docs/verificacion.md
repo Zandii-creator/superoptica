@@ -3,7 +3,7 @@
 - **Fecha:** 19 de noviembre de 2026
 - **Cambio:** `add-showcase-site`
 - **Entorno local:** Windows, PHP 8.3.36, Laravel 12, Livewire 3.8.11, Filament 4, SQLite en `database/espejuelos.sqlite`
-- **Producción:** publicada el 17/11/2026 en cPanel compartido (`dtaameri`), sin SSH ni Terminal; ajustes de Livewire del 19/11/2026
+- **Producción:** publicada el 17/11/2026 en cPanel compartido (`dtaameri`), sin SSH ni Terminal; ajustes de Livewire del 19/11/2026, login del panel confirmado el 20/11/2026
 
 ## Resultado general
 
@@ -62,8 +62,8 @@ Comprobado en producción:
 
 Las credenciales sembradas (`ADMIN_EMAIL` / `ADMIN_PASSWORD`) se probaron en local con el
 formulario real de Filament: autentican correctamente; el fallo nunca estuvo en la clave.
-Queda pendiente confirmar el login completo en producción después de subir el parche de
-`app/Providers/AppServiceProvider.php`.
+**Confirmado el 20/11/2026:** tras subir el parche de
+`app/Providers/AppServiceProvider.php`, el login de `/admin` funciona en producción.
 
 ## Suite de pruebas
 
@@ -133,9 +133,8 @@ tal como exige la tarea 8.3.
 
 La suite completa pasa al 100 %, el formato está limpio, el cambio valida con
 `openspec validate --strict`, las páginas públicas cumplen accesibilidad, SEO y peso, y el
-sitio está publicado en cPanel. El acceso al panel quedó corregido en local y las dos URLs
-de Livewire ya apuntan al subdirectorio; solo falta confirmar el login completo en
-producción tras subir el parche del proveedor.
+sitio está publicado en cPanel. Las dos URLs de Livewire apuntan al subdirectorio y el login
+de `/admin` está confirmado en producción el 20/11/2026. El cambio puede archivarse.
 
 Toda actualización futura sigue el flujo de `docs/despliegue.md`: nuevo zip, extracción
 sobre las carpetas existentes, borrado de `bootstrap/cache/*.php` y `migrate`/`optimize`
