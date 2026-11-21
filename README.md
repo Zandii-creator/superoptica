@@ -2,6 +2,14 @@
 
 Sitio vitrina de la óptica **SuperÓptica 20 20** (Ciego de Ávila, Cuba). Muestra la marca, el catálogo de monturas y los servicios; la venta se cierra en la tienda física o por WhatsApp. No hay cuentas, carrito, pagos ni inventario.
 
+## Documentación
+
+- [Manual de usuario](docs/manual-usuario.md) — uso del sitio y administración del contenido.
+- [Manual de operación](docs/manual-operacion.md) — rutinas, respaldos, actualizaciones e incidencias.
+- [Índice de documentación](docs/README.md) — qué leer y en qué orden.
+- [Guía de despliegue](docs/despliegue.md) — comandos y procedimiento en cPanel.
+- [Verificación](docs/verificacion.md) — resultados de la última publicación.
+
 ## Stack
 
 - Laravel 12 (PHP 8.3), Livewire 3 y Blade.
