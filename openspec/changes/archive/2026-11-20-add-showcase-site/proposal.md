@@ -40,7 +40,7 @@ Se necesita una vitrina digital que muestre la marca y los productos, genere con
 - **Código**: proyecto Laravel nuevo desde cero; rutas públicas, componentes Livewire, vistas Blade y panel Filament.
 - **Dependencias**: Laravel 12, Livewire 3, Tailwind 4, Filament, Spatie Media Library, Intervention Image.
 - **Datos**: base de datos MySQL en cPanel con tablas de marcas, productos, variantes, imágenes, servicios y ajustes.
-- **Almacenamiento**: imágenes de producto en disco local, con conversiones a WebP y miniaturas generadas al subir.
+- **Almacenamiento**: imágenes de producto en el disco público del servidor, con conversiones a WebP y miniaturas generadas al subir.
 - **Infraestructura**: cPanel 138 sin Redis ni Supervisor; caché y sesiones en archivos; assets compilados en local y desplegados manualmente por el usuario.
 - **Base de datos**: una sola base, `espejuelos`; sin conexiones ni migraciones sobre otras bases del servidor.
 - **Operación**: cualquier acción en cPanel fuera de la base `espejuelos` se entrega como instrucción escrita para ejecución manual.
