@@ -9,6 +9,9 @@ datos que no sea `espejuelos`.
 Esta guía ya está ajustada a la instalación real. Las instrucciones genéricas usan el
 patrón `https://DOMINIO/superoptica`; en este caso, `https://dtaamerica.com/superoptica`.
 
+Para el uso diario del sitio y del panel, consulta el [manual de usuario](manual-usuario.md).
+Para rutinas, respaldos y verificación, consulta el [manual de operación](manual-operacion.md).
+
 ## 0. Datos de esta instalación
 
 | Concepto | Valor verificado |
@@ -409,6 +412,7 @@ archivos. Antes de tener tablas, ese log acumula errores normales de tablas inex
 | Los cambios del `.env` no se aplican | `optimize` dejó `bootstrap/cache/config.php` | Borra los `.php` de `bootstrap/cache` y repite `optimize` |
 | 500 tras actualizar | Cachés o permisos | Borra `bootstrap/cache/*.php`; revisa `laravel.log` |
 | Imágenes rotas | Enlace de `storage` ausente o roto | Repite el `ln -s`; si el hosting no lo permite, copia los archivos |
+| Las imágenes del catálogo dan 404 aunque el archivo existe | La imagen se guardó en el disco privado (`media.disk = local`) porque la subida no fijaba `->disk('public')`; la URL `/storage/...` apunta fuera del subdirectorio del sitio | Sube `ProductForm.php` actualizado, borra la imagen desde el panel y vuelve a subirla; el registro nuevo debe quedar con `disk = public` |
 | 404 en `/catalogo` pero `/` responde | Falta `.htaccess` o `mod_rewrite` | Extrae de nuevo el zip público; si persiste, añade `RewriteBase /superoptica/` |
 | El login no se mantiene | `APP_URL` o `SESSION_DOMAIN` | `APP_URL` con `/superoptica` y `SESSION_DOMAIN=null`; limpia caché |
 | No deja entrar en `/admin` y marca el campo de correo | Se escribió el nombre (`ADMIN_NAME`) en el campo de correo | Entra con el valor de `ADMIN_EMAIL`, que es el `email` de la tabla `users`; el nombre no sirve como usuario |

@@ -58,6 +58,42 @@ class ProductResourceTest extends TestCase
         $this->assertCount(1, $product->getMedia('images'));
     }
 
+    public function test_images_uploaded_from_the_panel_use_the_public_media_disk(): void
+    {
+        $brand = Brand::factory()->create();
+
+        Livewire::test(CreateProduct::class)
+            ->fillForm([
+                'brand_id' => $brand->id,
+                'model' => '70001',
+                'slug' => 'modelo-70001',
+                'type' => 'monturas',
+                'gender' => 'unisex',
+                'price_from' => 1500,
+                'is_active' => true,
+                'published_at' => now(),
+                'images' => [UploadedFile::fake()->image('montura.png')],
+                'variants' => [
+                    ['color_name' => 'Negro', 'price' => 1500, 'sort' => 0, 'images' => [UploadedFile::fake()->image('negro.png')]],
+                ],
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $product = Product::query()->where('model', '70001')->firstOrFail();
+        $media = $product->getFirstMedia('images');
+
+        $this->assertNotNull($media);
+        $this->assertSame('public', $media->disk);
+        $this->assertSame('public', $media->conversions_disk);
+
+        $variantMedia = $product->variants->first()->getFirstMedia('images');
+
+        $this->assertNotNull($variantMedia);
+        $this->assertSame('public', $variantMedia->disk);
+        $this->assertSame('public', $variantMedia->conversions_disk);
+    }
+
     public function test_a_brand_can_be_created_from_the_panel(): void
     {
         Livewire::test(CreateBrand::class)

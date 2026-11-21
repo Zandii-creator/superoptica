@@ -49,8 +49,8 @@ $env:COMPOSER_MAX_PARALLEL_HTTP = '1'
 - **Rutas públicas:** filtros y paginación en la URL, renderizado en el servidor. Livewire solo para búsqueda, galería y selector de color.
 - **WhatsApp:** todos los enlaces se generan con un helper central que arma el mensaje con contexto.
 - **Sin JavaScript innecesario:** el sitio debe funcionar en conexiones lentas y en móviles modestos.
+- **Medios:** toda subida en Filament (productos, variantes, logos, ajustes) declara `->disk('public')`. `FILESYSTEM_DISK=local` es para archivos privados: si un campo de subida no fija el disco, Filament guarda en `local` y la imagen no se ve en el sitio.
 
 ## OpenSpec
 - Contexto y reglas: `openspec/config.yaml`.
-- Cambio en curso: `openspec/changes/add-showcase-site/`.
-- Validar el cambio: `openspec validate add-showcase-site --strict`.
+- Cambios: `openspec list`. Validar uno concreto: `openspec validate <cambio> --strict`.
