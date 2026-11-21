@@ -40,16 +40,16 @@ class AdminAccessTest extends TestCase
     {
         config([
             'admin.name' => 'Administrador',
-            'admin.email' => 'santiestebantoca@gmail.com',
-            'admin.password' => 'santiestebantoca.admin',
+            'admin.email' => 'admin@example.com',
+            'admin.password' => 'secret-password',
         ]);
 
         $this->seed(AdminUserSeeder::class);
 
         Livewire::test(Login::class)
             ->fillForm([
-                'email' => 'santiestebantoca@gmail.com',
-                'password' => 'santiestebantoca.admin',
+                'email' => 'admin@example.com',
+                'password' => 'secret-password',
             ])
             ->call('authenticate')
             ->assertHasNoFormErrors();
